@@ -1,0 +1,25 @@
+cerate docker image of EUREKA
+
+POM.XML-
+<!--generate jar with name eks-eureka-->
+<finalName>eks-eureka</finalName>
+
+1. generate jar -maven install
+2. create docker file in the same directory as pom.xml
+•	FROM <JDK version>
+ADD target/<jarname>.jar <jarname>.jar
+EXPOSE 8080(port where container run the docker image)
+ENTRYPOINT ["java", "-jar", "<jarname>.jar"] //command to execute the kjar
+eg,
+FROM openjdk:24
+ADD target/eks-eureka.jar eks-eureka.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "eks-eureka.jar"]
+
+change jdk 24 to eclipse-temurin:24-jre as jdk 24 is not available in docker hub
+
+
+
+3.rub below command in terminal to create docker image
+docker build -t <image name>:<tag> .
+eg. docker build -t eks-eureka .
